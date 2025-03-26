@@ -23,7 +23,7 @@
             border-radius: 15px;
             box-shadow: 0 4px 20px rgba(255, 0, 102, 0.6);
         }
-        .puzzle, .part {
+        .puzzle, .part, .final-screen {
             display: none;
             opacity: 0;
             transition: opacity 1.5s ease-in-out;
@@ -127,7 +127,12 @@
 
         <div id="rewardMessage" class="show" style="display: none;">
             <p>You've earned a special surprise... Are you ready?</p>
-            <button onclick="redirectToThrone()">Claim Your Reward</button>
+            <button onclick="showFinalScreen()">Claim Your Reward</button>
+        </div>
+
+        <div id="finalScreen" class="final-screen">
+            <p>To have your VIPPACK/Image, Audio Voice, click the link below.</p>
+            <button onclick="redirectToThrone()">Get VIPPACK</button>
         </div>
     </div>
 
@@ -175,8 +180,15 @@
             }
         }
 
+        function showFinalScreen() {
+            setTimeout(function() {
+                document.getElementById('finalScreen').classList.add('show');
+                document.getElementById('rewardMessage').style.display = 'none';
+            }, 7000); // 7 second delay before showing the final screen
+        }
+
         function redirectToThrone() {
-            window.location.href = "https://throne.com/dahliastar/item/cafd7438-a896-4f57-bebb-4729abfd715f"; 
+            window.location.href = "https://throne.com/dahliastar/item/cafd7438-a896-4f57-bebb-4729abfd715f"; // Replace with your Throne link
         }
     </script>
 </body>
