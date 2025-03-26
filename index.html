@@ -41,8 +41,8 @@
     </style>
 </head>
 <body>
-    <!-- Audio that plays when the page is loaded -->
-    <audio id="backgroundAudio" autoplay loop>
+    <!-- Audio Section -->
+    <audio id="backgroundAudio" loop>
         <source src="your_audio_file.mp3" type="audio/mp3">
         Your browser does not support the audio element.
     </audio>
@@ -63,15 +63,6 @@
             <div id="part1" class="part">
                 <img src="your_image_part1.jpg" alt="Part 1 of the image">
             </div>
-            <div id="part2" class="part">
-                <img src="your_image_part2.jpg" alt="Part 2 of the image">
-            </div>
-            <div id="part3" class="part">
-                <img src="your_image_part3.jpg" alt="Part 3 of the image">
-            </div>
-            <div id="part4" class="part">
-                <img src="your_image_part4.jpg" alt="Part 4 of the image">
-            </div>
         </div>
 
         <div id="rewardMessage" class="show" style="display: none;">
@@ -81,40 +72,31 @@
     </div>
 
     <script>
+        const audioElement = document.getElementById('backgroundAudio');
+
         function startPuzzle() {
             document.getElementById('puzzle').classList.add('show');
+            
+            // Avvia l'audio al primo clic
+            if (audioElement.paused) {
+                audioElement.play().catch(error => {
+                    console.warn("Audio autoplay blocked. Click required to start audio.");
+                });
+            }
         }
 
         function checkAnswer() {
             const answer = document.getElementById('answer').value.trim().toLowerCase();
             const resultElement = document.getElementById('result');
 
-            // Semplificato a "hello" in binario
             if (answer === 'hello') {
                 resultElement.innerHTML = '🎉 Correct! Keep going...';
-                resultElement.style.color = '#ff0066';
-
-                // Reveal part of the image
                 document.getElementById('part1').style.display = 'block';
-            } else if (answer === 'world') {
-                resultElement.innerHTML = 'You’re on fire! Keep solving...';
-                resultElement.style.color = '#ff0066';
 
-                // Reveal second part of the image
-                document.getElementById('part2').style.display = 'block';
-            } else if (answer === 'love') {
-                resultElement.innerHTML = 'Almost there, just one more step!';
-                resultElement.style.color = '#ff0066';
-
-                // Reveal third part of the image
-                document.getElementById('part3').style.display = 'block';
-            } else if (answer === 'findme') {
-                resultElement.innerHTML = '🎉 Well done, you solved the puzzle!';
-                resultElement.style.color = '#ff0066';
-
-                // Reveal the final part of the image
-                document.getElementById('part4').style.display = 'block';
-                document.getElementById('rewardMessage').style.display = 'block';
+                // Se l'audio non è partito prima, lo avvia qui
+                if (audioElement.paused) {
+                    audioElement.play();
+                }
             } else {
                 resultElement.innerHTML = '❌ Try again... the answer is closer than you think.';
                 resultElement.style.color = 'red';
@@ -122,7 +104,7 @@
         }
 
         function redirectToThrone() {
-            window.location.href = "https://throne.com/dahliastar/item/cafd7438-a896-4f57-bebb-4729abfd715f";
+            window.location.href = "https://yourthronepage.com";
         }
     </script>
 </body>
