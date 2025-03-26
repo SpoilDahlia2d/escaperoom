@@ -48,6 +48,44 @@
             from { width: 0%; }
             to { width: 100%; }
         }
+
+        /* Animazioni per l'effetto delle risposte */
+        .shake {
+            animation: shake 0.5s ease-in-out;
+        }
+        .zoom-in {
+            animation: zoomIn 0.5s ease-in-out;
+        }
+        .bounce {
+            animation: bounce 1s ease;
+        }
+        .fade-in {
+            animation: fadeIn 1.5s ease;
+        }
+
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            50% { transform: translateX(10px); }
+            75% { transform: translateX(-10px); }
+            100% { transform: translateX(0); }
+        }
+
+        @keyframes zoomIn {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes bounce {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0); }
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
     </style>
 </head>
 <body>
@@ -105,8 +143,9 @@
 
             if (answer === 'hello' && step === 1) {
                 resultElement.innerHTML = '🎉 Mmm... yes... you found the first clue.';
+                resultElement.classList.add('zoom-in');
                 resultElement.style.color = '#00ffcc';
-                document.getElementById('part1').classList.add('show');
+                document.getElementById('part1').classList.add('show', 'bounce');
                 progressBar.style.animation = 'progress 2s forwards';
                 step++;
                 if (audioElement.paused) {
@@ -114,20 +153,23 @@
                 }
             } else if (answer === 'secret' && step === 2) {
                 resultElement.innerHTML = 'Oh yes... just one more...';
+                resultElement.classList.add('shake');
                 resultElement.style.color = '#00ffcc';
-                document.getElementById('part2').classList.add('show');
+                document.getElementById('part2').classList.add('show', 'bounce');
                 progressBar.style.animation = 'progress 2s forwards';
                 step++;
             } else if (answer === 'desire' && step === 3) {
                 resultElement.innerHTML = 'You’ve unveiled the truth... enjoy. 🔥';
+                resultElement.classList.add('fade-in');
                 resultElement.style.color = '#00ffcc';
-                document.getElementById('part3').classList.add('show');
+                document.getElementById('part3').classList.add('show', 'bounce');
                 progressBar.style.animation = 'progress 2s forwards';
                 step++;
                 document.getElementById('rewardMessage').style.display = 'block';
             } else {
                 resultElement.innerHTML = '❌ Not quite... try again, my dear.';
                 resultElement.style.color = 'red';
+                resultElement.classList.add('shake');
             }
         }
 
