@@ -52,12 +52,47 @@
         .flash {
             animation: flash 0.5s ease-in-out;
         }
+        .shake {
+            animation: shake 0.5s ease-in-out;
+        }
+        .zoom-in {
+            animation: zoomIn 0.5s ease-in-out;
+        }
+        .bounce {
+            animation: bounce 1s ease;
+        }
+        .fade-in {
+            animation: fadeIn 1.5s ease;
+        }
 
         @keyframes flash {
             0% { background-color: #fff; }
             100% { background-color: transparent; }
         }
 
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            50% { transform: translateX(10px); }
+            75% { transform: translateX(-10px); }
+            100% { transform: translateX(0); }
+        }
+
+        @keyframes zoomIn {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes bounce {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0); }
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
     </style>
 </head>
 <body>
@@ -125,7 +160,7 @@
                 resultElement.classList.add('flash');
                 document.getElementById('part2').classList.add('show');
                 progressBar.style.animation = 'progress 2s forwards';
-                questionElement.innerHTML = "What is my greatest desire?";
+                questionElement.innerHTML = "What is my greatest desire? (Hint: Passion, energy, fire...)";
                 step++;
             } else if (answer === 'passion' && step === 3) {
                 resultElement.innerHTML = '🔥 You’ve unlocked the ultimate truth... enjoy.';
@@ -141,7 +176,7 @@
         }
 
         function redirectToThrone() {
-            window.location.href = "https://yourthronepage.com"; 
+            window.location.href = "https://throne.com/dahliastar/item/cafd7438-a896-4f57-bebb-4729abfd715f"; 
         }
     </script>
 </body>
