@@ -15,6 +15,7 @@
             justify-content: center;
             flex-direction: column;
             text-align: center;
+            overflow: hidden;
         }
         .container {
             max-width: 600px;
@@ -93,6 +94,26 @@
             0% { opacity: 0; }
             100% { opacity: 1; }
         }
+
+        .final-screen {
+            display: none;
+            text-align: center;
+        }
+
+        .final-screen button {
+            font-size: 18px;
+            padding: 15px 30px;
+            background-color: #ff0066;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .final-screen button:hover {
+            background-color: #e6005c;
+        }
     </style>
 </head>
 <body>
@@ -132,7 +153,7 @@
 
         <div id="finalScreen" class="final-screen">
             <p>To have your VIPPACK/Image, Audio Voice, click the link below.</p>
-            <button onclick="redirectToThrone()">Get VIPPACK</button>
+            <button onclick="redirectToThrone()">Get Your VIPPack</button>
         </div>
     </div>
 
@@ -184,6 +205,7 @@
             setTimeout(function() {
                 document.getElementById('finalScreen').classList.add('show');
                 document.getElementById('rewardMessage').style.display = 'none';
+                document.getElementById('puzzle').style.display = 'none';
             }, 7000); // 7 second delay before showing the final screen
         }
 
