@@ -49,34 +49,15 @@
             to { width: 100%; }
         }
 
-        .shake { animation: shake 0.5s ease-in-out; }
-        .zoom-in { animation: zoomIn 0.5s ease-in-out; }
-        .bounce { animation: bounce 1s ease; }
-        .fade-in { animation: fadeIn 1.5s ease; }
-
-        @keyframes shake {
-            0% { transform: translateX(0); }
-            25% { transform: translateX(-10px); }
-            50% { transform: translateX(10px); }
-            75% { transform: translateX(-10px); }
-            100% { transform: translateX(0); }
+        .flash {
+            animation: flash 0.5s ease-in-out;
         }
 
-        @keyframes zoomIn {
-            0% { transform: scale(0.8); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
+        @keyframes flash {
+            0% { background-color: #fff; }
+            100% { background-color: transparent; }
         }
 
-        @keyframes bounce {
-            0% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
-            100% { transform: translateY(0); }
-        }
-
-        @keyframes fadeIn {
-            0% { opacity: 0; }
-            100% { opacity: 1; }
-        }
     </style>
 </head>
 <body>
@@ -91,7 +72,7 @@
         <button onclick="startPuzzle()">Start Your Journey</button>
 
         <div class="puzzle" id="puzzle">
-            <p id="question">Quanti anni ha Dahlia? (Hint: è ancora giovane e splendida, poco più di vent'anni...)</p>
+            <p id="question">How old is Dahlia?</p>
             <input type="text" id="answer" placeholder="Your answer...">
             <button onclick="checkAnswer()">Submit</button>
             <p id="result"></p>
@@ -133,23 +114,23 @@
             const questionElement = document.getElementById('question');
 
             if (answer === '23' && step === 1) {
-                resultElement.innerHTML = '🎉 Mmm... yes... you found the first clue.';
-                resultElement.classList.add('zoom-in');
-                document.getElementById('part1').classList.add('show', 'bounce');
+                resultElement.innerHTML = '🎉 Yes... you know me well.';
+                resultElement.classList.add('flash');
+                document.getElementById('part1').classList.add('show');
                 progressBar.style.animation = 'progress 2s forwards';
-                questionElement.innerHTML = 'Decifra il codice binario: 01101001 00100000 01101100 01101111 01110110 01100101 00100000 01100100 01100001 01101000 01101100 01101001';
+                questionElement.innerHTML = "This binary code hides something special... (Hint: Try a binary converter app)";
                 step++;
             } else if (answer === 'i love dahlia' && step === 2) {
-                resultElement.innerHTML = 'Oh yes... just one more...';
-                resultElement.classList.add('shake');
-                document.getElementById('part2').classList.add('show', 'bounce');
+                resultElement.innerHTML = 'Mmm... so sweet... just one more...';
+                resultElement.classList.add('flash');
+                document.getElementById('part2').classList.add('show');
                 progressBar.style.animation = 'progress 2s forwards';
-                questionElement.innerHTML = 'Quale segreto nasconde il cuore di Dahlia? (Hint: una parola che parla di passione e desiderio)';
+                questionElement.innerHTML = "What is my greatest desire?";
                 step++;
-            } else if (answer === 'desire' && step === 3) {
-                resultElement.innerHTML = 'You’ve unveiled the truth... enjoy. 🔥';
-                resultElement.classList.add('fade-in');
-                document.getElementById('part3').classList.add('show', 'bounce');
+            } else if (answer === 'passion' && step === 3) {
+                resultElement.innerHTML = '🔥 You’ve unlocked the ultimate truth... enjoy.';
+                resultElement.classList.add('flash');
+                document.getElementById('part3').classList.add('show');
                 progressBar.style.animation = 'progress 2s forwards';
                 document.getElementById('rewardMessage').style.display = 'block';
             } else {
@@ -160,7 +141,7 @@
         }
 
         function redirectToThrone() {
-            window.location.href = "https://yourthronepage.com";
+            window.location.href = "https://yourthronepage.com"; 
         }
     </script>
 </body>
