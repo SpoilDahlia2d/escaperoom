@@ -153,7 +153,7 @@
 
         <div id="finalScreen" class="final-screen">
             <p>To have your VIPPACK/Image, Audio Voice, click the link below.</p>
-            <button onclick="redirectToThrone()">Get Your VIPPack</button>
+            <button onclick="redirectToThrone()">Get Your VIPACK</button>
         </div>
     </div>
 
@@ -193,7 +193,9 @@
                 resultElement.classList.add('flash');
                 document.getElementById('part3').classList.add('show');
                 progressBar.style.animation = 'progress 2s forwards';
-                document.getElementById('rewardMessage').style.display = 'block';
+                setTimeout(() => {
+                    document.getElementById('rewardMessage').style.display = 'block';
+                }, 7000); // Delay for 7 seconds
             } else {
                 resultElement.innerHTML = '❌ Not quite... try again, my dear.';
                 resultElement.style.color = 'red';
@@ -210,7 +212,7 @@
         }
 
         function redirectToThrone() {
-            window.location.href = "https://throne.com/dahliastar/item/cafd7438-a896-4f57-bebb-4729abfd715f"; // Replace with your Throne link
+            window.location.href = "https://yourthronepage.com"; // Replace with your Throne link
         }
     </script>
 </body>
