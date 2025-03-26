@@ -72,7 +72,7 @@
         <button onclick="startPuzzle()">Start Your Journey</button>
 
         <div class="puzzle" id="puzzle">
-            <p id="question">How old is Dahlia?</p>
+            <p id="question">How old is Dahlia? (Hint: She's in her early twenties)</p>
             <input type="text" id="answer" placeholder="Your answer...">
             <button onclick="checkAnswer()">Submit</button>
             <p id="result"></p>
@@ -118,7 +118,7 @@
                 resultElement.classList.add('flash');
                 document.getElementById('part1').classList.add('show');
                 progressBar.style.animation = 'progress 2s forwards';
-                questionElement.innerHTML = "This binary code hides something special... (Hint: Try a binary converter app)";
+                questionElement.innerHTML = "Binary code: 01101001 00100000 01101100 01101111 01110110 01100101 00100000 01100100 01100001 01101000 01101100 01101001 01100001 <br> (Hint: Try a binary converter app)";
                 step++;
             } else if (answer === 'i love dahlia' && step === 2) {
                 resultElement.innerHTML = 'Mmm... so sweet... just one more...';
