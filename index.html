@@ -44,29 +44,14 @@
             background: #ff0066;
             animation: progress 3s forwards;
         }
-        @keyframes progress {
-            from { width: 0%; }
-            to { width: 100%; }
-        }
 
-        .shake {
-            animation: shake 0.5s ease-in-out;
-        }
-        .zoom-in {
-            animation: zoomIn 0.5s ease-in-out;
-        }
-        .bounce {
-            animation: bounce 1s ease;
-        }
-        .fade-in {
-            animation: fadeIn 1.5s ease;
-        }
-        .spin-in {
-            animation: spinIn 1.5s ease forwards;
-        }
-        .pulse {
-            animation: pulse 1.5s infinite alternate;
-        }
+        .shake { animation: shake 0.5s ease-in-out; }
+        .zoom-in { animation: zoomIn 0.5s ease-in-out; }
+        .bounce { animation: bounce 1s ease; }
+        .fade-in { animation: fadeIn 1.5s ease; }
+        .spin-in { animation: spinIn 1.5s ease forwards; }
+        .pulse { animation: pulse 1.5s infinite alternate; }
+        .glow { animation: glow 1.5s infinite alternate; }
 
         @keyframes shake {
             0% { transform: translateX(0); }
@@ -101,6 +86,11 @@
             from { transform: scale(1); }
             to { transform: scale(1.1); }
         }
+
+        @keyframes glow {
+            from { box-shadow: 0 0 15px #ff0066; }
+            to { box-shadow: 0 0 30px #ff1493; }
+        }
     </style>
 </head>
 <body>
@@ -115,7 +105,7 @@
         <button onclick="startPuzzle()">Start Your Journey</button>
 
         <div class="puzzle" id="puzzle">
-            <p>Whisper the magic word...<br> (Hint: 01001000 01100101 01101100 01101100 01101111)</p>
+            <p>Question 1: How old is Dahlia?</p>
             <input type="text" id="answer" placeholder="Your answer...">
             <button onclick="checkAnswer()">Submit</button>
             <p id="result"></p>
@@ -154,13 +144,13 @@
             const answer = document.getElementById('answer').value.trim().toLowerCase();
             const resultElement = document.getElementById('result');
 
-            if (answer === 'hello' && step === 1) {
-                document.getElementById('part1').classList.add('show', 'spin-in');
+            if (answer === '23' && step === 1) {
+                document.getElementById('part1').classList.add('show', 'glow');
                 step++;
-            } else if (answer === 'secret' && step === 2) {
-                document.getElementById('part2').classList.add('show', 'zoom-in');
+            } else if (answer === 'i love dahlia' && step === 2) {
+                document.getElementById('part2').classList.add('show', 'fade-in');
                 step++;
-            } else if (answer === 'desire' && step === 3) {
+            } else if (answer === 'surrender' && step === 3) {
                 document.getElementById('part3').classList.add('show', 'bounce');
                 document.getElementById('rewardMessage').style.display = 'block';
                 step++;
@@ -171,8 +161,11 @@
         }
 
         function redirectToThrone() {
-            window.location.href = "https://yourthronepage.com";
+            window.location.href = "https://throne.com/dahliastar/item/cafd7438-a896-4f57-bebb-4729abfd715f";
         }
     </script>
 </body>
 </html>
+
+   
+        
