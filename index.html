@@ -23,7 +23,7 @@
             border-radius: 15px;
             box-shadow: 0 4px 20px rgba(255, 0, 102, 0.6);
         }
-        .puzzle, .part {
+        .puzzle, .part, .question {
             display: none;
             opacity: 0;
             transition: opacity 1.5s ease-in-out;
@@ -44,16 +44,6 @@
             background: #ff0066;
             animation: progress 3s forwards;
         }
-        .final-button {
-            background-color: #ff0066;
-            color: white;
-            font-size: 20px;
-            border: none;
-            border-radius: 10px;
-            padding: 15px 30px;
-            cursor: pointer;
-            margin-top: 20px;
-        }
         @keyframes progress {
             from { width: 0%; }
             to { width: 100%; }
@@ -61,7 +51,7 @@
     </style>
 </head>
 <body>
-    <audio id="backgroundAudio" autoplay loop>
+    <audio id="backgroundAudio" loop>
         <source src="your_audio_file.mp3" type="audio/mp3">
         Your browser does not support the audio element.
     </audio>
@@ -72,72 +62,74 @@
         <button onclick="startPuzzle()">Start Your Journey</button>
 
         <div class="puzzle" id="puzzle">
-            <p>Question 1: How old is Dahlia? <br><span style="color: #bbb">(Hint: Age in numbers)</span></p>
-            <input type="text" id="answer1" placeholder="Your answer...">
-            <button onclick="checkAnswer1()">Submit</button>
-            <div id="part1" class="part">
+            <div class="question" id="question1">
+                <p>How old is Dahlia? <span style="color:gray">(Hint: It's over 20...)</span></p>
+                <input type="text" id="answer1" placeholder="Your answer...">
+                <button onclick="checkAnswer(1)">Submit</button>
+            </div>
+
+            <div class="part" id="part1">
                 <img src="images/part1.jpg" alt="Part 1 of the image">
             </div>
 
-            <p>Question 2: Binary code - what does it mean? <br><span style="color: #bbb">(Hint: Use a binary decoder)</span></p>
-            <p>01001001 00100000 01101100 01101111 01110110 01100101 00100000 01000100 01100001 01101000 01101100 01101001 01100001</p>
-            <input type="text" id="answer2" placeholder="Your answer...">
-            <button onclick="checkAnswer2()">Submit</button>
-            <div id="part2" class="part">
+            <div class="question" id="question2">
+                <p>Do I prefer Techdom or Findom? <span style="color:gray">(Hint: I love playing mind games...)</span></p>
+                <input type="text" id="answer2" placeholder="Your answer...">
+                <button onclick="checkAnswer(2)">Submit</button>
+            </div>
+
+            <div class="part" id="part2">
                 <img src="images/part2.jpg" alt="Part 2 of the image">
             </div>
 
-            <p>Question 3: Do I prefer techdom or findom? <br><span style="color: #bbb">(Hint: I love mind games)</span></p>
-            <input type="text" id="answer3" placeholder="Your answer...">
-            <button onclick="checkAnswer3()">Submit</button>
-            <div id="part3" class="part">
-                <img src="images/part3.jpg" alt="Part 3 of the image">
+            <div class="question" id="question3">
+                <p>Binary Code Challenge: 01001001 00100000 01101100 01101111 01110110 01100101 00100000 01000100 01100001 01101000 01101100 01101001 01100001 <span style="color:gray">(Hint: Use a binary translator app)</span></p>
+                <input type="text" id="answer3" placeholder="Your answer...">
+                <button onclick="checkAnswer(3)">Submit</button>
             </div>
 
-            <div id="rewardMessage" class="show" style="display: none;">
-                <p>You are so beautiful, now for unlock more surprise click:</p>
-                <button class="final-button" onclick="redirectToThrone()">CLICK AND ENJOY</button>
+            <div class="part" id="part3">
+                <img src="images/part3.jpg" alt="Part 3 of the image">
             </div>
+        </div>
+
+        <div id="rewardMessage" class="show" style="display: none;">
+            <p>You are so beautiful... now for unlock more surprise click:</p>
+            <button onclick="redirectToThrone()" style="background-color: #ff0066; color: #fff; padding: 10px 20px; border: none; border-radius: 10px; font-size: 20px; cursor: pointer;">CLICK AND ENJOY</button>
         </div>
     </div>
 
     <script>
         const audioElement = document.getElementById('backgroundAudio');
-        let step = 1; 
+        let step = 1;
 
         function startPuzzle() {
             document.getElementById('puzzle').classList.add('show');
+            document.getElementById('question1').classList.add('show');
             if (audioElement.paused) {
                 audioElement.play().catch(() => console.warn("Audio autoplay blocked; manual interaction required."));
             }
         }
 
-        function checkAnswer1() {
-            const answer = document.getElementById('answer1').value.trim();
-            if (answer === '23') {
-                document.getElementById('part1').classList.add('show');
-                step++;
-            }
-        }
+        function checkAnswer(stepNumber) {
+            const answers = ["23", "techdom", "i love dahlia"];
+            const userAnswer = document.getElementById(`answer${stepNumber}`).value.trim().toLowerCase();
 
-        function checkAnswer2() {
-            const answer = document.getElementById('answer2').value.trim().toLowerCase();
-            if (answer === 'i love dahlia') {
-                document.getElementById('part2').classList.add('show');
-                step++;
-            }
-        }
-
-        function checkAnswer3() {
-            const answer = document.getElementById('answer3').value.trim().toLowerCase();
-            if (answer === 'techdom') {
-                document.getElementById('part3').classList.add('show');
-                document.getElementById('rewardMessage').style.display = 'block';
+            if (userAnswer === answers[stepNumber - 1]) {
+                document.getElementById(`part${stepNumber}`).classList.add('show');
+                document.getElementById(`question${stepNumber}`).style.display = 'none';
+                if (stepNumber < 3) {
+                    document.getElementById(`question${stepNumber + 1}`).classList.add('show');
+                } else {
+                    document.getElementById('rewardMessage').style.display = 'block';
+                }
+            } else {
+                alert('❌ Not quite... try again!');
             }
         }
 
         function redirectToThrone() {
-            window.location.href = "https://dashboard.render.com/static/srv-cvi698lds78s73ejmp9g/deploys/dep-cvirimp5pdvs73cfuqn0";
+            window.location.href = "https://throne.com/dahliastar/item/cafd7438-a896-4f57-bebb-4729abfd715f"; 
         }
     </script>
 </body>
