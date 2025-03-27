@@ -5,127 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sensual Escape Room</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #1a1a1a;
-            color: #ff0066;
-            display: flex;
-            height: 100vh;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            text-align: center;
-            overflow: hidden;
-        }
-        .container {
-            max-width: 600px;
-            padding: 20px;
-            background-color: #2a2a2a;
-            border-radius: 15px;
-            box-shadow: 0 4px 20px rgba(255, 0, 102, 0.6);
-        }
-        .puzzle, .part, .final-screen {
-            display: none;
-            opacity: 0;
-            transition: opacity 1.5s ease-in-out;
-        }
+        body { font-family: Arial, sans-serif; background-color: #1a1a1a; color: #ff0066; display: flex; height: 100vh; align-items: center; justify-content: center; flex-direction: column; text-align: center; overflow: hidden; }
+        .container { max-width: 600px; padding: 20px; background-color: #2a2a2a; border-radius: 15px; box-shadow: 0 4px 20px rgba(255, 0, 102, 0.6); }
+        .puzzle, .part, .final-screen { display: none; opacity: 0; transition: opacity 1.5s ease-in-out; }
         .show { display: block; opacity: 1; }
-        img {
-            max-width: 100%;
-            margin-top: 15px;
-            border-radius: 10px;
-        }
-        #result {
-            margin-top: 15px;
-            font-weight: bold;
-        }
-        .progress-bar {
-            width: 100%;
-            height: 5px;
-            background: #ff0066;
-            animation: progress 3s forwards;
-        }
-        @keyframes progress {
-            from { width: 0%; }
-            to { width: 100%; }
-        }
-
-        .flash {
-            animation: flash 0.5s ease-in-out;
-        }
-        .shake {
-            animation: shake 0.5s ease-in-out;
-        }
-        .zoom-in {
-            animation: zoomIn 0.5s ease-in-out;
-        }
-        .bounce {
-            animation: bounce 1s ease;
-        }
-        .fade-in {
-            animation: fadeIn 1.5s ease;
-        }
-
-        @keyframes flash {
-            0% { background-color: #fff; }
-            100% { background-color: transparent; }
-        }
-
-        @keyframes shake {
-            0% { transform: translateX(0); }
-            25% { transform: translateX(-10px); }
-            50% { transform: translateX(10px); }
-            75% { transform: translateX(-10px); }
-            100% { transform: translateX(0); }
-        }
-
-        @keyframes zoomIn {
-            0% { transform: scale(0.8); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
-        }
-
-        @keyframes bounce {
-            0% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
-            100% { transform: translateY(0); }
-        }
-
-        @keyframes fadeIn {
-            0% { opacity: 0; }
-            100% { opacity: 1; }
-        }
-
-        .final-screen {
-            display: none;
-            text-align: center;
-        }
-
-        .final-screen button {
-            font-size: 18px;
-            padding: 15px 30px;
-            background-color: #ff0066;
-            color: white;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .final-screen button:hover {
-            background-color: #e6005c;
-        }
-
-        .reward-message {
-            margin-top: 15px;
-        }
+        img { max-width: 100%; margin-top: 15px; border-radius: 10px; }
+        #result { margin-top: 15px; font-weight: bold; }
+        .progress-bar { width: 100%; height: 5px; background: #ff0066; animation: progress 3s forwards; }
+        .flash { animation: flash 0.5s ease-in-out; }
+        .final-screen { display: none; text-align: center; }
+        .final-screen button { font-size: 18px; padding: 15px 30px; background-color: #ff0066; color: white; border: none; border-radius: 10px; cursor: pointer; transition: background-color 0.3s ease; }
+        .final-screen button:hover { background-color: #e6005c; }
+        .reward-message { margin-top: 15px; display: none; }
     </style>
 </head>
 <body>
-    <audio id="backgroundAudio" loop>
-        <source src="your_audio_file.mp3" type="audio/mp3">
-        Your browser does not support the audio element.
-    </audio>
-
     <div class="container">
         <h1>Sensual Escape Room</h1>
         <p>I've left clues for you... can you find me?</p>
@@ -150,8 +44,8 @@
             </div>
         </div>
 
-        <div id="rewardMessage" class="reward-message" style="display: none;">
-            <p>Congratulations! If you want a VIPPACK, CLICK!</p>
+        <div id="rewardMessage" class="reward-message">
+            <p>You are so beautiful, now for unlock more surprise click</p>
             <button onclick="showFinalScreen()">CLICK AND ENJOY</button>
         </div>
 
@@ -162,14 +56,10 @@
     </div>
 
     <script>
-        const audioElement = document.getElementById('backgroundAudio');
         let step = 1;
 
         function startPuzzle() {
             document.getElementById('puzzle').classList.add('show');
-            if (audioElement.paused) {
-                audioElement.play().catch(() => console.warn("Audio autoplay blocked; manual interaction required."));
-            }
         }
 
         function checkAnswer() {
@@ -180,30 +70,20 @@
 
             if (answer === '23' && step === 1) {
                 resultElement.innerHTML = '🎉 Yes... you know me well.';
-                resultElement.classList.add('flash');
                 document.getElementById('part1').classList.add('show');
-                progressBar.style.animation = 'progress 2s forwards';
                 questionElement.innerHTML = "Binary code: 01101001 00100000 01101100 01101111 01110110 01100101 00100000 01100100 01100001 01101000 01101100 01101001 01100001 <br> (Hint: Try a binary converter app)";
                 step++;
             } else if (answer === 'i love dahlia' && step === 2) {
                 resultElement.innerHTML = 'Mmm... so sweet... just one more...';
-                resultElement.classList.add('flash');
                 document.getElementById('part2').classList.add('show');
-                progressBar.style.animation = 'progress 2s forwards';
                 questionElement.innerHTML = "What is my greatest desire? (Hint: Passion, energy, fire...)";
                 step++;
             } else if (answer === 'passion' && step === 3) {
                 resultElement.innerHTML = '🔥 You’ve unlocked the ultimate truth... enjoy.';
-                resultElement.classList.add('flash');
                 document.getElementById('part3').classList.add('show');
-                progressBar.style.animation = 'progress 2s forwards';
-
-                // Show the final button immediately after the correct answer
                 document.getElementById('rewardMessage').style.display = 'block';
             } else {
                 resultElement.innerHTML = '❌ Not quite... try again, my dear.';
-                resultElement.style.color = 'red';
-                resultElement.classList.add('shake');
             }
         }
 
@@ -214,7 +94,7 @@
         }
 
         function redirectToThrone() {
-            window.location.href = "https://throne.com/dahliastar/item/cafd7438-a896-4f57-bebb-4729abfd715f"; // Replace with your Throne link
+            window.location.href = "https://throne.com/dahliastar/item/cafd7438-a896-4f57-bebb-4729abfd715f"; 
         }
     </script>
 </body>
