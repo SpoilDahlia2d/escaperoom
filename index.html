@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sensual Escape Room</title>
+    <title>SENSUAL ESCAPE ROOM</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -49,88 +49,40 @@
             to { width: 100%; }
         }
 
-        /* Animazioni per l'effetto delle risposte */
-        .shake {
-            animation: shake 0.5s ease-in-out;
-        }
-        .zoom-in {
-            animation: zoomIn 0.5s ease-in-out;
-        }
-        .bounce {
-            animation: bounce 1s ease;
-        }
-        .fade-in {
-            animation: fadeIn 1.5s ease;
-        }
-
-        @keyframes shake {
-            0% { transform: translateX(0); }
-            25% { transform: translateX(-10px); }
-            50% { transform: translateX(10px); }
-            75% { transform: translateX(-10px); }
-            100% { transform: translateX(0); }
-        }
-
-        @keyframes zoomIn {
-            0% { transform: scale(0.8); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
-        }
-
-        @keyframes bounce {
-            0% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
-            100% { transform: translateY(0); }
-        }
-
-        @keyframes fadeIn {
-            0% { opacity: 0; }
-            100% { opacity: 1; }
-        }
-
-        #finalButton {
-            background-color: #ff0066;
-            color: white;
-            font-size: 20px;
+        .highlight { color: #00ffcc; }
+        .button-large {
+            margin-top: 20px;
             padding: 15px 30px;
+            background-color: #ff0066;
+            color: #fff;
             border: none;
             border-radius: 10px;
             cursor: pointer;
-            display: none;
-            margin-top: 20px;
-        }
-
-        #finalButton:hover {
-            background-color: #ff3399;
-        }
-
-        .hint {
-            font-size: 14px;
-            color: #ff3399;
-            font-style: italic;
+            font-size: 20px;
         }
     </style>
 </head>
 <body>
-    <audio id="backgroundAudio" loop>
-        <source src="your_audio_file.mp3" type="audio/mp3">
-        Your browser does not support the audio element.
-    </audio>
-
     <div class="container">
-        <h1>Sensual Escape Room</h1>
+        <h1>SENSUAL ESCAPE ROOM</h1>
         <p>Are you ready to reveal the treasure?</p>
         <button onclick="startPuzzle()">Start Your Journey</button>
 
         <div class="puzzle" id="puzzle">
-            <p id="question">What is your first question?</p>
-            <p id="hint" class="hint"></p>
-            <input type="text" id="answer" placeholder="Your answer...">
-            <button onclick="checkAnswer()">Submit</button>
+            <p>Question 1: How old is Dahlia? <span class="highlight">(Hint: She's in her early twenties...)</span></p>
+            <input type="text" id="answer1" placeholder="Your answer...">
+
+            <p>Question 2: What do I prefer, techdom or findom? <span class="highlight">(Hint: I like playing with minds...)</span></p>
+            <input type="text" id="answer2" placeholder="Your answer...">
+
+            <p>Question 3: 01001001 00100000 01101100 01101111 01110110 01100101 00100000 01000100 01100001 01101000 01101100 01101001 01100001 <span class="highlight">(Hint: Try a binary decoder app)</span></p>
+            <input type="text" id="answer3" placeholder="Your answer...">
+
+            <button onclick="checkAnswers()">Submit</button>
             <p id="result"></p>
 
             <div class="progress-bar" id="progressBar"></div>
 
-            <!-- Immagini sbloccate a pezzi -->
             <div id="part1" class="part">
                 <img src="images/part1.jpg" alt="Part 1 of the image">
             </div>
@@ -142,71 +94,37 @@
             </div>
         </div>
 
-        <div id="rewardMessage" style="display: none;">
-            <p>You are so beautiful, now for unlock more surprises!</p>
-            <button id="finalButton" onclick="redirectToThrone()">CLICK AND ENJOY</button>
+        <div id="rewardMessage" class="show" style="display: none;">
+            <p>You are so beautiful, now for unlock more surprise click</p>
+            <button class="button-large" onclick="redirectToThrone()">CLICK AND ENJOY</button>
         </div>
     </div>
 
     <script>
-        const audioElement = document.getElementById('backgroundAudio');
-        let step = 1; // Step per tracciare il progresso delle risposte
-
         function startPuzzle() {
             document.getElementById('puzzle').classList.add('show');
-            if (audioElement.paused) {
-                audioElement.play().catch(() => console.warn("Audio autoplay blocked; manual interaction required."));
-            }
-            nextQuestion();
         }
 
-        function nextQuestion() {
-            const questionElement = document.getElementById('question');
-            const hintElement = document.getElementById('hint');
-
-            if (step === 1) {
-                questionElement.innerHTML = "How old is Dahlia?";
-                hintElement.innerHTML = "(Hint: She's young, but not too young,2....!)";
-            } else if (step === 2) {
-                questionElement.innerHTML = "Decode this binary: 01001000 01101111 01110111 01100001";
-                hintElement.innerHTML = "(Hint: It's all about love for someone special.)";
-            } else if (step === 3) {
-                questionElement.innerHTML = "Prefer doing Techdom or Findom?";
-                hintElement.innerHTML = "(Hint: She loves mental games and psychological challenges.)";
-            }
-        }
-
-        function checkAnswer() {
-            const answer = document.getElementById('answer').value.trim().toLowerCase();
+        function checkAnswers() {
+            const answer1 = document.getElementById('answer1').value.trim().toLowerCase();
+            const answer2 = document.getElementById('answer2').value.trim().toLowerCase();
+            const answer3 = document.getElementById('answer3').value.trim().toLowerCase();
             const resultElement = document.getElementById('result');
-            const progressBar = document.getElementById('progressBar');
 
-            if (step === 1 && answer === '23') {
-                resultElement.innerHTML = '🎉 Correct! You unlocked the first clue!';
-                resultElement.classList.add('zoom-in');
-                document.getElementById('part1').classList.add('show', 'bounce');
-                progressBar.style.animation = 'progress 2s forwards';
-                step++;
-            } else if (step === 2 && answer === 'i love dahlia') {
-                resultElement.innerHTML = 'You’ve decoded the binary! 🔥';
-                resultElement.classList.add('fade-in');
-                document.getElementById('part2').classList.add('show', 'bounce');
-                progressBar.style.animation = 'progress 2s forwards';
-                step++;
-            } else if (step === 3 && answer === 'techdom') {
-                resultElement.innerHTML = 'Oh yes... Just one more...';
-                resultElement.classList.add('shake');
-                document.getElementById('part3').classList.add('show', 'bounce');
-                progressBar.style.animation = 'progress 2s forwards';
-                step++;
-            } else {
-                resultElement.innerHTML = '❌ Not quite... try again, my dear.';
-                resultElement.classList.add('shake');
+            if (answer1 === '23') {
+                document.getElementById('part1').classList.add('show');
+            }
+            if (answer2 === 'techdom') {
+                document.getElementById('part2').classList.add('show');
+            }
+            if (answer3 === 'i love dahlia') {
+                document.getElementById('part3').classList.add('show');
+                document.getElementById('rewardMessage').style.display = 'block';
             }
         }
 
         function redirectToThrone() {
-            window.location.href = "https://throne.com/dahliastar/item/cafd7438-a896-4f57-bebb-4729abfd715f"; // Replace with your Throne link
+            window.location.href = "https://throne.com/dahliastar/item/cafd7438-a896-4f57-bebb-4729abfd715f";
         }
     </script>
 </body>
