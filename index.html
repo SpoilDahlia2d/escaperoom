@@ -5,28 +5,74 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sensual Escape Room</title>
     <style>
-        body { font-family: Arial, sans-serif; background-color: #1a1a1a; color: #ff0066; display: flex; height: 100vh; align-items: center; justify-content: center; flex-direction: column; text-align: center; overflow: hidden; }
-        .container { max-width: 600px; padding: 20px; background-color: #2a2a2a; border-radius: 15px; box-shadow: 0 4px 20px rgba(255, 0, 102, 0.6); }
-        .puzzle, .part, .final-screen { display: none; opacity: 0; transition: opacity 1.5s ease-in-out; }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1a1a1a;
+            color: #ff0066;
+            display: flex;
+            height: 100vh;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            text-align: center;
+        }
+        .container {
+            max-width: 600px;
+            padding: 20px;
+            background-color: #2a2a2a;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(255, 0, 102, 0.6);
+        }
+        .puzzle, .part {
+            display: none;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+        }
         .show { display: block; opacity: 1; }
-        img { max-width: 100%; margin-top: 15px; border-radius: 10px; }
-        #result { margin-top: 15px; font-weight: bold; }
-        .progress-bar { width: 100%; height: 5px; background: #ff0066; animation: progress 3s forwards; }
-        .flash { animation: flash 0.5s ease-in-out; }
-        .final-screen { display: none; text-align: center; }
-        .final-screen button { font-size: 18px; padding: 15px 30px; background-color: #ff0066; color: white; border: none; border-radius: 10px; cursor: pointer; transition: background-color 0.3s ease; }
-        .final-screen button:hover { background-color: #e6005c; }
-        .reward-message { margin-top: 15px; display: none; }
+        img {
+            max-width: 100%;
+            margin-top: 15px;
+            border-radius: 10px;
+        }
+        #result {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 5px;
+            background: #ff0066;
+            animation: progress 3s forwards;
+        }
+        @keyframes progress {
+            from { width: 0%; }
+            to { width: 100%; }
+        }
+
+        .flash {
+            animation: flash 1s ease-in-out;
+        }
+
+        @keyframes flash {
+            0% { opacity: 1; }
+            50% { opacity: 0; }
+            100% { opacity: 1; }
+        }
     </style>
 </head>
 <body>
+    <audio id="backgroundAudio" loop>
+        <source src="your_audio_file.mp3" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
+
     <div class="container">
         <h1>Sensual Escape Room</h1>
         <p>I've left clues for you... can you find me?</p>
         <button onclick="startPuzzle()">Start Your Journey</button>
 
         <div class="puzzle" id="puzzle">
-            <p id="question">How old is Dahlia? (Hint: She's in her early twenties)</p>
+            <p>Whisper the magic word...<br> (Hint: 01001000 01100101 01101100 01101100 01101111)</p>
             <input type="text" id="answer" placeholder="Your answer...">
             <button onclick="checkAnswer()">Submit</button>
             <p id="result"></p>
@@ -44,57 +90,50 @@
             </div>
         </div>
 
-        <div id="rewardMessage" class="reward-message">
+        <div id="rewardMessage" class="show" style="display: none;">
             <p>You are so beautiful, now for unlock more surprise click</p>
-            <button onclick="showFinalScreen()">CLICK AND ENJOY</button>
-        </div>
-
-        <div id="finalScreen" class="final-screen">
-            <p>To have your VIPPACK/Image, Audio Voice, click the link below.</p>
-            <button onclick="redirectToThrone()">Get Your VIPPack</button>
+            <button onclick="redirectToThrone()">CLICK AND ENJOY</button>
         </div>
     </div>
 
     <script>
+        const audioElement = document.getElementById('backgroundAudio');
         let step = 1;
 
         function startPuzzle() {
             document.getElementById('puzzle').classList.add('show');
+            if (audioElement.paused) {
+                audioElement.play().catch(() => console.warn("Audio autoplay blocked; manual interaction required."));
+            }
         }
 
         function checkAnswer() {
             const answer = document.getElementById('answer').value.trim().toLowerCase();
             const resultElement = document.getElementById('result');
             const progressBar = document.getElementById('progressBar');
-            const questionElement = document.getElementById('question');
 
             if (answer === '23' && step === 1) {
-                resultElement.innerHTML = '🎉 Yes... you know me well.';
-                document.getElementById('part1').classList.add('show');
-                questionElement.innerHTML = "Binary code: 01101001 00100000 01101100 01101111 01110110 01100101 00100000 01100100 01100001 01101000 01101100 01101001 01100001 <br> (Hint: Try a binary converter app)";
+                resultElement.innerHTML = '🎉 Correct! Moving on...';
+                document.getElementById('part1').classList.add('show', 'flash');
+                progressBar.style.animation = 'progress 2s forwards';
                 step++;
             } else if (answer === 'i love dahlia' && step === 2) {
-                resultElement.innerHTML = 'Mmm... so sweet... just one more...';
-                document.getElementById('part2').classList.add('show');
-                questionElement.innerHTML = "What is my greatest desire? (Hint: Passion, energy, fire...)";
+                resultElement.innerHTML = 'Oh yes... just one more...';
+                document.getElementById('part2').classList.add('show', 'flash');
+                progressBar.style.animation = 'progress 2s forwards';
                 step++;
             } else if (answer === 'passion' && step === 3) {
-                resultElement.innerHTML = '🔥 You’ve unlocked the ultimate truth... enjoy.';
-                document.getElementById('part3').classList.add('show');
+                resultElement.innerHTML = 'You’ve unlocked the ultimate truth... enjoy.';
+                document.getElementById('part3').classList.add('show', 'flash');
                 document.getElementById('rewardMessage').style.display = 'block';
             } else {
-                resultElement.innerHTML = '❌ Not quite... try again, my dear.';
+                resultElement.innerHTML = '❌ Not quite... try again.';
+                resultElement.style.color = 'red';
             }
         }
 
-        function showFinalScreen() {
-            document.getElementById('finalScreen').classList.add('show');
-            document.getElementById('rewardMessage').style.display = 'none';
-            document.getElementById('puzzle').style.display = 'none';
-        }
-
         function redirectToThrone() {
-            window.location.href = "https://throne.com/dahliastar/item/cafd7438-a896-4f57-bebb-4729abfd715f"; 
+            window.location.href = "https://yourthronepage.com"; // Sostituisci con il tuo link di Throne
         }
     </script>
 </body>
