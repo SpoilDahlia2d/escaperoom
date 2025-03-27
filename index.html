@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SENSUAL ESCAPE ROOM</title>
+    <title>Sensual Escape Room</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -44,87 +44,100 @@
             background: #ff0066;
             animation: progress 3s forwards;
         }
+        .final-button {
+            background-color: #ff0066;
+            color: white;
+            font-size: 20px;
+            border: none;
+            border-radius: 10px;
+            padding: 15px 30px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
         @keyframes progress {
             from { width: 0%; }
             to { width: 100%; }
         }
-
-        .highlight { color: #00ffcc; }
-        .button-large {
-            margin-top: 20px;
-            padding: 15px 30px;
-            background-color: #ff0066;
-            color: #fff;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            font-size: 20px;
-        }
     </style>
 </head>
 <body>
+    <audio id="backgroundAudio" autoplay loop>
+        <source src="your_audio_file.mp3" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
+
     <div class="container">
         <h1>SENSUAL ESCAPE ROOM</h1>
         <p>Are you ready to reveal the treasure?</p>
         <button onclick="startPuzzle()">Start Your Journey</button>
 
         <div class="puzzle" id="puzzle">
-            <p>Question 1: How old is Dahlia? <span class="highlight">(Hint: She's in her early twenties...)</span></p>
+            <p>Question 1: How old is Dahlia? <br><span style="color: #bbb">(Hint: Age in numbers)</span></p>
             <input type="text" id="answer1" placeholder="Your answer...">
-
-            <p>Question 2: What do I prefer, techdom or findom? <span class="highlight">(Hint: I like playing with minds...)</span></p>
-            <input type="text" id="answer2" placeholder="Your answer...">
-
-            <p>Question 3: 01001001 00100000 01101100 01101111 01110110 01100101 00100000 01000100 01100001 01101000 01101100 01101001 01100001 <span class="highlight">(Hint: Try a binary decoder app)</span></p>
-            <input type="text" id="answer3" placeholder="Your answer...">
-
-            <button onclick="checkAnswers()">Submit</button>
-            <p id="result"></p>
-
-            <div class="progress-bar" id="progressBar"></div>
-
+            <button onclick="checkAnswer1()">Submit</button>
             <div id="part1" class="part">
                 <img src="images/part1.jpg" alt="Part 1 of the image">
             </div>
+
+            <p>Question 2: Binary code - what does it mean? <br><span style="color: #bbb">(Hint: Use a binary decoder)</span></p>
+            <p>01001001 00100000 01101100 01101111 01110110 01100101 00100000 01000100 01100001 01101000 01101100 01101001 01100001</p>
+            <input type="text" id="answer2" placeholder="Your answer...">
+            <button onclick="checkAnswer2()">Submit</button>
             <div id="part2" class="part">
                 <img src="images/part2.jpg" alt="Part 2 of the image">
             </div>
+
+            <p>Question 3: Do I prefer techdom or findom? <br><span style="color: #bbb">(Hint: I love mind games)</span></p>
+            <input type="text" id="answer3" placeholder="Your answer...">
+            <button onclick="checkAnswer3()">Submit</button>
             <div id="part3" class="part">
                 <img src="images/part3.jpg" alt="Part 3 of the image">
             </div>
-        </div>
 
-        <div id="rewardMessage" class="show" style="display: none;">
-            <p>You are so beautiful, now for unlock more surprise click</p>
-            <button class="button-large" onclick="redirectToThrone()">CLICK AND ENJOY</button>
+            <div id="rewardMessage" class="show" style="display: none;">
+                <p>You are so beautiful, now for unlock more surprise click:</p>
+                <button class="final-button" onclick="redirectToThrone()">CLICK AND ENJOY</button>
+            </div>
         </div>
     </div>
 
     <script>
+        const audioElement = document.getElementById('backgroundAudio');
+        let step = 1; 
+
         function startPuzzle() {
             document.getElementById('puzzle').classList.add('show');
+            if (audioElement.paused) {
+                audioElement.play().catch(() => console.warn("Audio autoplay blocked; manual interaction required."));
+            }
         }
 
-        function checkAnswers() {
-            const answer1 = document.getElementById('answer1').value.trim().toLowerCase();
-            const answer2 = document.getElementById('answer2').value.trim().toLowerCase();
-            const answer3 = document.getElementById('answer3').value.trim().toLowerCase();
-            const resultElement = document.getElementById('result');
-
-            if (answer1 === '23') {
+        function checkAnswer1() {
+            const answer = document.getElementById('answer1').value.trim();
+            if (answer === '23') {
                 document.getElementById('part1').classList.add('show');
+                step++;
             }
-            if (answer2 === 'techdom') {
+        }
+
+        function checkAnswer2() {
+            const answer = document.getElementById('answer2').value.trim().toLowerCase();
+            if (answer === 'i love dahlia') {
                 document.getElementById('part2').classList.add('show');
+                step++;
             }
-            if (answer3 === 'i love dahlia') {
+        }
+
+        function checkAnswer3() {
+            const answer = document.getElementById('answer3').value.trim().toLowerCase();
+            if (answer === 'techdom') {
                 document.getElementById('part3').classList.add('show');
                 document.getElementById('rewardMessage').style.display = 'block';
             }
         }
 
         function redirectToThrone() {
-            window.location.href = "https://throne.com/dahliastar/item/cafd7438-a896-4f57-bebb-4729abfd715f";
+            window.location.href = "https://dashboard.render.com/static/srv-cvi698lds78s73ejmp9g/deploys/dep-cvirimp5pdvs73cfuqn0";
         }
     </script>
 </body>
