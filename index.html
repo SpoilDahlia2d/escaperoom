@@ -102,6 +102,12 @@
         #finalButton:hover {
             background-color: #ff3399;
         }
+
+        .hint {
+            font-size: 14px;
+            color: #ff3399;
+            font-style: italic;
+        }
     </style>
 </head>
 <body>
@@ -117,7 +123,7 @@
 
         <div class="puzzle" id="puzzle">
             <p id="question">What is your first question?</p>
-            <p id="hint"></p>
+            <p id="hint" class="hint"></p>
             <input type="text" id="answer" placeholder="Your answer...">
             <button onclick="checkAnswer()">Submit</button>
             <p id="result"></p>
@@ -160,16 +166,13 @@
 
             if (step === 1) {
                 questionElement.innerHTML = "How old is Dahlia?";
-                hintElement.innerHTML = "(Hint: She's young, but not too young!)";
+                hintElement.innerHTML = "(Hint: She's young, but not too young,2....!)";
             } else if (step === 2) {
-                questionElement.innerHTML = "Prefer doing Techdom or Findom?";
-                hintElement.innerHTML = "(Hint: She loves mental games and psychological challenges.)";
-            } else if (step === 3) {
                 questionElement.innerHTML = "Decode this binary: 01001000 01101111 01110111 01100001";
                 hintElement.innerHTML = "(Hint: It's all about love for someone special.)";
-            } else if (step === 4) {
-                questionElement.innerHTML = "What is the final word?";
-                hintElement.innerHTML = "(Hint: Think about passion and desire!)";
+            } else if (step === 3) {
+                questionElement.innerHTML = "Prefer doing Techdom or Findom?";
+                hintElement.innerHTML = "(Hint: She loves mental games and psychological challenges.)";
             }
         }
 
@@ -184,22 +187,16 @@
                 document.getElementById('part1').classList.add('show', 'bounce');
                 progressBar.style.animation = 'progress 2s forwards';
                 step++;
-            } else if (step === 2 && answer === 'techdom') {
-                resultElement.innerHTML = 'Oh yes... Just one more...';
-                resultElement.classList.add('shake');
+            } else if (step === 2 && answer === 'i love dahlia') {
+                resultElement.innerHTML = 'You’ve decoded the binary! 🔥';
+                resultElement.classList.add('fade-in');
                 document.getElementById('part2').classList.add('show', 'bounce');
                 progressBar.style.animation = 'progress 2s forwards';
                 step++;
-            } else if (step === 3 && answer === 'i love dahlia') {
-                resultElement.innerHTML = 'You’ve decoded the binary! 🔥';
-                resultElement.classList.add('fade-in');
+            } else if (step === 3 && answer === 'techdom') {
+                resultElement.innerHTML = 'Oh yes... Just one more...';
+                resultElement.classList.add('shake');
                 document.getElementById('part3').classList.add('show', 'bounce');
-                progressBar.style.animation = 'progress 2s forwards';
-                step++;
-            } else if (step === 4 && answer === 'passion') {
-                resultElement.innerHTML = 'You’ve unlocked the ultimate truth... enjoy.';
-                resultElement.classList.add('fade-in');
-                document.getElementById('finalButton').style.display = 'block';
                 progressBar.style.animation = 'progress 2s forwards';
                 step++;
             } else {
