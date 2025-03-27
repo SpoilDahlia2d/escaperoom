@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SENSUAL ESCAPE ROOM</title>
+    <title>Sensual Escape Room</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -44,15 +44,15 @@
             background: #ff0066;
             animation: progress 3s forwards;
         }
-        .final-button {
-            background-color: #ff0066;
-            color: #fff;
-            padding: 15px 30px;
-            border: none;
-            border-radius: 30px;
-            font-size: 20px;
-            cursor: pointer;
-            margin-top: 20px;
+        @keyframes progress {
+            from { width: 0%; }
+            to { width: 100%; }
+        }
+
+        .flash { animation: flash 0.5s ease-in-out; }
+        @keyframes flash {
+            from { background-color: #ff0066; }
+            to { background-color: transparent; }
         }
     </style>
 </head>
@@ -68,70 +68,73 @@
         <button onclick="startPuzzle()">Start Your Journey</button>
 
         <div class="puzzle" id="puzzle">
-            <div id="step1" class="part">
-                <p>How old is Dahlia? (Hint: She's young but wise)</p>
-                <input type="text" id="answer1" placeholder="Your answer...">
-                <button onclick="checkAnswer(1)">Submit</button>
-            </div>
+            <p id="question"></p>
+            <input type="text" id="answer" placeholder="Your answer...">
+            <button onclick="checkAnswer()">Submit</button>
+            <p id="result"></p>
 
-            <div id="step2" class="part">
-                <p>Do I prefer Techdom or Findom? (Hint: I love mental games)</p>
-                <input type="text" id="answer2" placeholder="Your answer...">
-                <button onclick="checkAnswer(2)">Submit</button>
-            </div>
-
-            <div id="step3" class="part">
-                <p>01001001 00100000 01101100 01101111 01110110 01100101 00100000 01000100 01100001 01101000 01101100 01101001 01100001 (Hint: Try a binary translator app)</p>
-                <input type="text" id="answer3" placeholder="Your answer...">
-                <button onclick="checkAnswer(3)">Submit</button>
-            </div>
-
-            <div id="result"></div>
             <div class="progress-bar" id="progressBar"></div>
 
-            <div id="finalButton" style="display: none;">
-                <p>You are so beautiful, now for unlocking more surprises click:</p>
-                <button class="final-button" onclick="redirectToThrone()">CLICK AND ENJOY</button>
+            <!-- Immagini sbloccate a pezzi -->
+            <div id="part1" class="part">
+                <img src="images/part1.jpg" alt="Part 1 of the image">
             </div>
+            <div id="part2" class="part">
+                <img src="images/part2.jpg" alt="Part 2 of the image">
+            </div>
+            <div id="part3" class="part">
+                <img src="images/part3.jpg" alt="Part 3 of the image">
+            </div>
+        </div>
+
+        <div id="rewardMessage" class="show" style="display: none;">
+            <p>You are so beautiful, now for unlock more surprises click:</p>
+            <button onclick="redirectToThrone()" style="padding: 15px 30px; background-color: #ff0066; color: #fff; border: none; border-radius: 10px; cursor: pointer; font-size: 20px;">CLICK AND ENJOY</button>
         </div>
     </div>
 
     <script>
         const audioElement = document.getElementById('backgroundAudio');
-        let step = 1; // Step per tracciare il progresso delle risposte
+        let step = 1;
+
+        const questions = [
+            { question: "How old is Dahlia?", answer: "23", hint: "I'm young but full of surprises..." },
+            { question: "Binary code: 01001001 00100000 01101100 01101111 01110110 01100101 00100000 01000100 01100001 01101000 01101100 01101001 01100001", answer: "i love dahlia", hint: "Use a binary translator tool!" },
+            { question: "Do I prefer Techdom or Findom?", answer: "techdom", hint: "I love playing mind games..." }
+        ];
 
         function startPuzzle() {
             document.getElementById('puzzle').classList.add('show');
-            document.getElementById('step1').classList.add('show');
+            document.getElementById('question').textContent = questions[0].question;
             if (audioElement.paused) {
                 audioElement.play().catch(() => console.warn("Audio autoplay blocked; manual interaction required."));
             }
         }
 
-        function checkAnswer(currentStep) {
-            const answer = document.getElementById(`answer${currentStep}`).value.trim().toLowerCase();
+        function checkAnswer() {
+            const answer = document.getElementById('answer').value.trim().toLowerCase();
             const resultElement = document.getElementById('result');
-            const progressBar = document.getElementById('progressBar');
 
-            if ((currentStep === 1 && answer === '23') ||
-                (currentStep === 2 && answer === 'techdom') ||
-                (currentStep === 3 && answer === 'i love dahlia')) {
-                resultElement.innerHTML = 'Correct!';
-                resultElement.style.color = '#00ffcc';
-                document.getElementById(`step${currentStep}`).classList.remove('show');
-                if (currentStep < 3) {
-                    document.getElementById(`step${currentStep + 1}`).classList.add('show');
+            if (answer === questions[step - 1].answer) {
+                resultElement.innerHTML = `🎉 Correct! ${questions[step - 1].hint}`;
+                resultElement.classList.add('flash');
+                document.getElementById(`part${step}`).classList.add('show');
+                step++;
+
+                if (step <= questions.length) {
+                    document.getElementById('question').textContent = questions[step - 1].question;
                 } else {
-                    document.getElementById('finalButton').style.display = 'block';
+                    document.getElementById('rewardMessage').style.display = 'block';
                 }
             } else {
                 resultElement.innerHTML = '❌ Not quite... try again, my dear.';
                 resultElement.style.color = 'red';
+                resultElement.classList.add('flash');
             }
         }
 
         function redirectToThrone() {
-            window.location.href = "https://throne.com/dahliastar/item/cafd7438-a896-4f57-bebb-4729abfd715f"; // Sostituisci con il tuo link di Throne
+            window.location.href = "https://throne.com/dahliastar/item/cafd7438-a896-4f57-bebb-4729abfd715f";
         }
     </script>
 </body>
