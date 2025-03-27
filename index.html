@@ -5,15 +5,55 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SENSUAL ESCAPE ROOM</title>
     <style>
-        body { font-family: Arial, sans-serif; background-color: #1a1a1a; color: #ff0066; display: flex; height: 100vh; align-items: center; justify-content: center; flex-direction: column; text-align: center; }
-        .container { max-width: 600px; padding: 20px; background-color: #2a2a2a; border-radius: 15px; box-shadow: 0 4px 20px rgba(255, 0, 102, 0.6); }
-        .puzzle, .part { display: none; opacity: 0; transition: opacity 1.5s ease-in-out; }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1a1a1a;
+            color: #ff0066;
+            display: flex;
+            height: 100vh;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            text-align: center;
+        }
+        .container {
+            max-width: 600px;
+            padding: 20px;
+            background-color: #2a2a2a;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(255, 0, 102, 0.6);
+        }
+        .puzzle, .part {
+            display: none;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+        }
         .show { display: block; opacity: 1; }
-        img { max-width: 100%; margin-top: 15px; border-radius: 10px; }
-        #result { margin-top: 15px; font-weight: bold; }
-        .progress-bar { width: 100%; height: 5px; background: #ff0066; animation: progress 3s forwards; }
-        .final-button { display: none; background-color: #ff0066; color: #fff; font-size: 24px; padding: 15px 30px; border: none; border-radius: 10px; cursor: pointer; margin-top: 20px; }
-        .final-button.show { display: inline-block; }
+        img {
+            max-width: 100%;
+            margin-top: 15px;
+            border-radius: 10px;
+        }
+        #result {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 5px;
+            background: #ff0066;
+            animation: progress 3s forwards;
+        }
+        .final-button {
+            background-color: #ff0066;
+            color: #fff;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 30px;
+            font-size: 20px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
@@ -28,61 +68,62 @@
         <button onclick="startPuzzle()">Start Your Journey</button>
 
         <div class="puzzle" id="puzzle">
-            <p>Question 1: How old is Dahlia? (Hint: She's young but mature)</p>
-            <input type="text" id="answer" placeholder="Your answer...">
-            <button onclick="checkAnswer()">Submit</button>
-            <p id="result"></p>
+            <div id="step1" class="part">
+                <p>How old is Dahlia? (Hint: She's young but wise)</p>
+                <input type="text" id="answer1" placeholder="Your answer...">
+                <button onclick="checkAnswer(1)">Submit</button>
+            </div>
 
+            <div id="step2" class="part">
+                <p>Do I prefer Techdom or Findom? (Hint: I love mental games)</p>
+                <input type="text" id="answer2" placeholder="Your answer...">
+                <button onclick="checkAnswer(2)">Submit</button>
+            </div>
+
+            <div id="step3" class="part">
+                <p>01001001 00100000 01101100 01101111 01110110 01100101 00100000 01000100 01100001 01101000 01101100 01101001 01100001 (Hint: Try a binary translator app)</p>
+                <input type="text" id="answer3" placeholder="Your answer...">
+                <button onclick="checkAnswer(3)">Submit</button>
+            </div>
+
+            <div id="result"></div>
             <div class="progress-bar" id="progressBar"></div>
 
-            <!-- Image parts -->
-            <div id="part1" class="part">
-                <img src="images/part1.jpg" alt="Part 1 of the image">
+            <div id="finalButton" style="display: none;">
+                <p>You are so beautiful, now for unlocking more surprises click:</p>
+                <button class="final-button" onclick="redirectToThrone()">CLICK AND ENJOY</button>
             </div>
-            <div id="part2" class="part">
-                <img src="images/part2.jpg" alt="Part 2 of the image">
-            </div>
-            <div id="part3" class="part">
-                <img src="images/part3.jpg" alt="Part 3 of the image">
-            </div>
-        </div>
-
-        <div id="rewardMessage" class="show" style="display: none;">
-            <p>You are so beautiful, now for unlock more surprise click</p>
-            <button class="final-button show" onclick="redirectToThrone()">CLICK AND ENJOY</button>
         </div>
     </div>
 
     <script>
         const audioElement = document.getElementById('backgroundAudio');
-        let step = 1;
+        let step = 1; // Step per tracciare il progresso delle risposte
 
         function startPuzzle() {
             document.getElementById('puzzle').classList.add('show');
+            document.getElementById('step1').classList.add('show');
             if (audioElement.paused) {
                 audioElement.play().catch(() => console.warn("Audio autoplay blocked; manual interaction required."));
             }
         }
 
-        function checkAnswer() {
-            const answer = document.getElementById('answer').value.trim().toLowerCase();
+        function checkAnswer(currentStep) {
+            const answer = document.getElementById(`answer${currentStep}`).value.trim().toLowerCase();
             const resultElement = document.getElementById('result');
             const progressBar = document.getElementById('progressBar');
 
-            if (answer === '23' && step === 1) {
-                resultElement.innerHTML = '🎉 Correct! Now you are closer...';
-                document.getElementById('part1').classList.add('show');
-                progressBar.style.animation = 'progress 2s forwards';
-                step++;
-            } else if (answer === 'i love dahlia' && step === 2) {
-                resultElement.innerHTML = '💋 Sweet! Now one more...';
-                document.getElementById('part2').classList.add('show');
-                progressBar.style.animation = 'progress 2s forwards';
-                step++;
-            } else if (answer === 'passion' && step === 3) {
-                resultElement.innerHTML = 'You’ve unlocked the ultimate truth... enjoy. 🔥';
-                document.getElementById('part3').classList.add('show');
-                document.getElementById('rewardMessage').style.display = 'block';
+            if ((currentStep === 1 && answer === '23') ||
+                (currentStep === 2 && answer === 'techdom') ||
+                (currentStep === 3 && answer === 'i love dahlia')) {
+                resultElement.innerHTML = 'Correct!';
+                resultElement.style.color = '#00ffcc';
+                document.getElementById(`step${currentStep}`).classList.remove('show');
+                if (currentStep < 3) {
+                    document.getElementById(`step${currentStep + 1}`).classList.add('show');
+                } else {
+                    document.getElementById('finalButton').style.display = 'block';
+                }
             } else {
                 resultElement.innerHTML = '❌ Not quite... try again, my dear.';
                 resultElement.style.color = 'red';
@@ -90,7 +131,7 @@
         }
 
         function redirectToThrone() {
-            window.location.href = "https://throne.com/dahliastar/item/cafd7438-a896-4f57-bebb-4729abfd715f";
+            window.location.href = "https://throne.com/dahliastar/item/cafd7438-a896-4f57-bebb-4729abfd715f"; // Sostituisci con il tuo link di Throne
         }
     </script>
 </body>
