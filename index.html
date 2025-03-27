@@ -49,18 +49,18 @@
             to { width: 100%; }
         }
         .final-button {
-            display: none;
-            margin-top: 20px;
-            padding: 10px 20px;
             background-color: #ff0066;
             color: #fff;
             border: none;
-            border-radius: 5px;
+            padding: 15px 30px;
+            border-radius: 30px;
+            margin-top: 20px;
             cursor: pointer;
             font-weight: bold;
+            transition: background 0.3s ease;
         }
-        .final-button.show {
-            display: inline-block;
+        .final-button:hover {
+            background-color: #ff3388;
         }
     </style>
 </head>
@@ -71,7 +71,7 @@
         <button onclick="startPuzzle()">Start Your Journey</button>
 
         <div class="puzzle" id="puzzle">
-            <p id="question">How old is Dahlia?</p>
+            <p>How old is Dahlia? (Hint: She's in her early 20s)</p>
             <input type="text" id="answer" placeholder="Your answer...">
             <button onclick="checkAnswer()">Submit</button>
             <p id="result"></p>
@@ -87,10 +87,11 @@
             <div id="part3" class="part">
                 <img src="images/part3.jpg" alt="Part 3 of the image">
             </div>
-        </div>
 
-        <div id="rewardMessage" class="show final-button" onclick="redirectToThrone()">
-            CLICK AND ENJOY
+            <div id="rewardMessage" class="show" style="display: none;">
+                <p>You are so beautiful, now for unlock more surprise click:</p>
+                <button class="final-button" onclick="redirectToThrone()">CLICK AND ENJOY</button>
+            </div>
         </div>
     </div>
 
@@ -105,29 +106,27 @@
             const answer = document.getElementById('answer').value.trim().toLowerCase();
             const resultElement = document.getElementById('result');
             const progressBar = document.getElementById('progressBar');
-            const questionElement = document.getElementById('question');
 
             if (answer === '23' && step === 1) {
-                resultElement.innerHTML = '🎉 Correct! Dahlia is 23.';
+                resultElement.innerHTML = '🎉 Yes... First clue solved.';
                 document.getElementById('part1').classList.add('show');
-                questionElement.innerHTML = 'Decode this binary code: 01101001 00100000 01101100 01101111 01110110 01100101 00100000 01100100 01100001 01101000 01101100 01101001 01100001';
                 step++;
             } else if (answer === 'i love dahlia' && step === 2) {
-                resultElement.innerHTML = '💫 Beautiful answer... Just one more...';
+                resultElement.innerHTML = '💋 So sweet... One more step...';
                 document.getElementById('part2').classList.add('show');
-                questionElement.innerHTML = 'I burn without fire, I’m alive but not breathing. What am I?';
                 step++;
             } else if (answer === 'passion' && step === 3) {
-                resultElement.innerHTML = 'You’ve unlocked the ultimate truth... enjoy.';
+                resultElement.innerHTML = '🔥 You’ve unlocked the ultimate truth... enjoy.';
                 document.getElementById('part3').classList.add('show');
-                document.getElementById('rewardMessage').classList.add('show');
+                document.getElementById('rewardMessage').style.display = 'block';
             } else {
                 resultElement.innerHTML = '❌ Not quite... try again, my dear.';
+                resultElement.style.color = 'red';
             }
         }
 
         function redirectToThrone() {
-            window.location.href = "https://yourthronepage.com";
+            window.location.href = "https://throne.com/dahliastar/item/cafd7438-a896-4f57-bebb-4729abfd715f";
         }
     </script>
 </body>
