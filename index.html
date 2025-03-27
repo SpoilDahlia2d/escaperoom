@@ -23,7 +23,7 @@
             border-radius: 15px;
             box-shadow: 0 4px 20px rgba(255, 0, 102, 0.6);
         }
-        .puzzle, .part {
+        .puzzle, .part, .question {
             display: none;
             opacity: 0;
             transition: opacity 1.5s ease-in-out;
@@ -48,14 +48,6 @@
             from { width: 0%; }
             to { width: 100%; }
         }
-
-        .flash {
-            animation: flash 1s ease-in-out;
-        }
-        @keyframes flash {
-            0%, 100% { background-color: #ff0066; }
-            50% { background-color: #ffffff; }
-        }
     </style>
 </head>
 <body>
@@ -65,42 +57,44 @@
     </audio>
 
     <div class="container">
-        <h1>Sensual Escape Room</h1>
-        <p>I've left clues for you... can you find me?</p>
+        <h1>Are you ready to reveal the treasure?</h1>
         <button onclick="startPuzzle()">Start Your Journey</button>
 
         <div class="puzzle" id="puzzle">
-            <p>How old is Dahlia?</p>
-            <p>Hint: Think about her latest birthday... 😉</p>
-            <input type="text" id="answer" placeholder="Your answer...">
-            <button onclick="checkAnswer()">Submit</button>
-            <p id="result"></p>
+            <div class="question" id="question1">
+                <p>How old is Dahlia? (Hint: Think about her last birthday)</p>
+                <input type="text" id="answer1" placeholder="Your answer...">
+                <button onclick="checkAnswer(1)">Submit</button>
+            </div>
+
+            <div class="question" id="question2">
+                <p>Do I prefer techdom or findom? (Hint: I love playing with minds)</p>
+                <input type="text" id="answer2" placeholder="Your answer...">
+                <button onclick="checkAnswer(2)">Submit</button>
+            </div>
+
+            <div class="question" id="question3">
+                <p>Binary Code: 01101001 00100000 01101100 01101111 01110110 01100101 00100000 01100100 01100001 01101000 01101100 01101001 01100001 (Hint: Try a binary decoder app)</p>
+                <input type="text" id="answer3" placeholder="Your answer...">
+                <button onclick="checkAnswer(3)">Submit</button>
+            </div>
 
             <div class="progress-bar" id="progressBar"></div>
 
             <div id="part1" class="part">
                 <img src="images/part1.jpg" alt="Part 1 of the image">
             </div>
-
-            <p>Do I prefer techdom or findom?</p>
-            <p>Hint: I love playing mind games... 😉</p>
-
             <div id="part2" class="part">
                 <img src="images/part2.jpg" alt="Part 2 of the image">
             </div>
-
-            <p>Binary Code Puzzle:</p>
-            <p>01001001 00100000 01101100 01101111 01110110 01100101 00100000 01000100 01100001 01101000 01101100 01101001 01100001</p>
-            <p>Hint: Try using a binary decoder app to solve this... 🧐</p>
-
             <div id="part3" class="part">
                 <img src="images/part3.jpg" alt="Part 3 of the image">
             </div>
-        </div>
 
-        <div id="rewardMessage" class="show" style="display: none;">
-            <p>You are so beautiful, now for unlocking more surprises click:</p>
-            <button onclick="redirectToThrone()">CLICK AND ENJOY</button>
+            <div id="rewardMessage" class="show" style="display: none;">
+                <p>You are so beautiful, now for unlocking more surprises click:</p>
+                <button onclick="redirectToThrone()">CLICK AND ENJOY</button>
+            </div>
         </div>
     </div>
 
@@ -110,31 +104,31 @@
 
         function startPuzzle() {
             document.getElementById('puzzle').classList.add('show');
+            document.getElementById('question1').classList.add('show');
             if (audioElement.paused) {
                 audioElement.play().catch(() => console.warn("Audio autoplay blocked; manual interaction required."));
             }
         }
 
-        function checkAnswer() {
-            const answer = document.getElementById('answer').value.trim().toLowerCase();
+        function checkAnswer(questionNumber) {
+            const answer = document.getElementById(`answer${questionNumber}`).value.trim().toLowerCase();
             const resultElement = document.getElementById('result');
             const progressBar = document.getElementById('progressBar');
 
-            if (answer === '23' && step === 1) {
-                resultElement.innerHTML = '🎉 Correct!';
-                resultElement.classList.add('flash');
-                document.getElementById('part1').classList.add('show');
-                step++;
-            } else if (answer === 'techdom' && step === 2) {
-                resultElement.innerHTML = 'Nice choice...';
-                resultElement.classList.add('flash');
-                document.getElementById('part2').classList.add('show');
-                step++;
-            } else if (answer === 'i love dahlia' && step === 3) {
-                resultElement.innerHTML = 'You’ve unlocked the ultimate truth... enjoy. 🔥';
-                resultElement.classList.add('flash');
-                document.getElementById('part3').classList.add('show');
-                document.getElementById('rewardMessage').style.display = 'block';
+            if ((answer === '23' && questionNumber === 1) ||
+                (answer === 'techdom' && questionNumber === 2) ||
+                (answer === 'i love dahlia' && questionNumber === 3)) {
+
+                document.getElementById(`question${questionNumber}`).classList.remove('show');
+                if (questionNumber < 3) {
+                    document.getElementById(`question${questionNumber + 1}`).classList.add('show');
+                }
+
+                document.getElementById(`part${questionNumber}`).classList.add('show');
+
+                if (questionNumber === 3) {
+                    document.getElementById('rewardMessage').style.display = 'block';
+                }
             } else {
                 resultElement.innerHTML = '❌ Not quite... try again, my dear.';
                 resultElement.style.color = 'red';
@@ -142,7 +136,7 @@
         }
 
         function redirectToThrone() {
-            window.location.href = "https://throne.com/dahliastar/item/cafd7438-a896-4f57-bebb-4729abfd715f";
+            window.location.href = "https://throne.com/dahliastar/item/cafd7438-a896-4f57-bebb-4729abfd715f"; 
         }
     </script>
 </body>
