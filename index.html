@@ -114,6 +114,10 @@
         .final-screen button:hover {
             background-color: #e6005c;
         }
+
+        .reward-message {
+            margin-top: 15px;
+        }
     </style>
 </head>
 <body>
@@ -146,7 +150,7 @@
             </div>
         </div>
 
-        <div id="rewardMessage" class="show" style="display: none;">
+        <div id="rewardMessage" class="reward-message" style="display: none;">
             <p>Congratulations! If you want a VIPPACK, CLICK!</p>
             <button onclick="showFinalScreen()">CLICK AND ENJOY</button>
         </div>
@@ -193,7 +197,8 @@
                 resultElement.classList.add('flash');
                 document.getElementById('part3').classList.add('show');
                 progressBar.style.animation = 'progress 2s forwards';
-                // Show final button immediately after last answer
+
+                // Show the final button immediately after the correct answer
                 document.getElementById('rewardMessage').style.display = 'block';
             } else {
                 resultElement.innerHTML = '❌ Not quite... try again, my dear.';
