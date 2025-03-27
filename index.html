@@ -48,31 +48,30 @@
             from { width: 0%; }
             to { width: 100%; }
         }
-
-        .flash {
-            animation: flash 1s ease-in-out;
+        .final-button {
+            display: none;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #ff0066;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
         }
-
-        @keyframes flash {
-            0% { opacity: 1; }
-            50% { opacity: 0; }
-            100% { opacity: 1; }
+        .final-button.show {
+            display: inline-block;
         }
     </style>
 </head>
 <body>
-    <audio id="backgroundAudio" loop>
-        <source src="your_audio_file.mp3" type="audio/mp3">
-        Your browser does not support the audio element.
-    </audio>
-
     <div class="container">
         <h1>Sensual Escape Room</h1>
         <p>I've left clues for you... can you find me?</p>
         <button onclick="startPuzzle()">Start Your Journey</button>
 
         <div class="puzzle" id="puzzle">
-            <p>Whisper the magic word...<br> (Hint: 01001000 01100101 01101100 01101100 01101111)</p>
+            <p id="question">How old is Dahlia?</p>
             <input type="text" id="answer" placeholder="Your answer...">
             <button onclick="checkAnswer()">Submit</button>
             <p id="result"></p>
@@ -90,50 +89,45 @@
             </div>
         </div>
 
-        <div id="rewardMessage" class="show" style="display: none;">
-            <p>You are so beautiful, now for unlock more surprise click</p>
-            <button onclick="redirectToThrone()">CLICK AND ENJOY</button>
+        <div id="rewardMessage" class="show final-button" onclick="redirectToThrone()">
+            CLICK AND ENJOY
         </div>
     </div>
 
     <script>
-        const audioElement = document.getElementById('backgroundAudio');
         let step = 1;
 
         function startPuzzle() {
             document.getElementById('puzzle').classList.add('show');
-            if (audioElement.paused) {
-                audioElement.play().catch(() => console.warn("Audio autoplay blocked; manual interaction required."));
-            }
         }
 
         function checkAnswer() {
             const answer = document.getElementById('answer').value.trim().toLowerCase();
             const resultElement = document.getElementById('result');
             const progressBar = document.getElementById('progressBar');
+            const questionElement = document.getElementById('question');
 
             if (answer === '23' && step === 1) {
-                resultElement.innerHTML = '🎉 Correct! Moving on...';
-                document.getElementById('part1').classList.add('show', 'flash');
-                progressBar.style.animation = 'progress 2s forwards';
+                resultElement.innerHTML = '🎉 Correct! Dahlia is 23.';
+                document.getElementById('part1').classList.add('show');
+                questionElement.innerHTML = 'Decode this binary code: 01101001 00100000 01101100 01101111 01110110 01100101 00100000 01100100 01100001 01101000 01101100 01101001 01100001';
                 step++;
             } else if (answer === 'i love dahlia' && step === 2) {
-                resultElement.innerHTML = 'Oh yes... just one more...';
-                document.getElementById('part2').classList.add('show', 'flash');
-                progressBar.style.animation = 'progress 2s forwards';
+                resultElement.innerHTML = '💫 Beautiful answer... Just one more...';
+                document.getElementById('part2').classList.add('show');
+                questionElement.innerHTML = 'I burn without fire, I’m alive but not breathing. What am I?';
                 step++;
             } else if (answer === 'passion' && step === 3) {
                 resultElement.innerHTML = 'You’ve unlocked the ultimate truth... enjoy.';
-                document.getElementById('part3').classList.add('show', 'flash');
-                document.getElementById('rewardMessage').style.display = 'block';
+                document.getElementById('part3').classList.add('show');
+                document.getElementById('rewardMessage').classList.add('show');
             } else {
-                resultElement.innerHTML = '❌ Not quite... try again.';
-                resultElement.style.color = 'red';
+                resultElement.innerHTML = '❌ Not quite... try again, my dear.';
             }
         }
 
         function redirectToThrone() {
-            window.location.href = "https://yourthronepage.com"; // Sostituisci con il tuo link di Throne
+            window.location.href = "https://yourthronepage.com";
         }
     </script>
 </body>
