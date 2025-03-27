@@ -48,30 +48,30 @@
             from { width: 0%; }
             to { width: 100%; }
         }
-        .final-button {
-            background-color: #ff0066;
-            color: #fff;
-            border: none;
-            padding: 15px 30px;
-            border-radius: 30px;
-            margin-top: 20px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: background 0.3s ease;
+
+        .flash {
+            animation: flash 1s ease-in-out;
         }
-        .final-button:hover {
-            background-color: #ff3388;
+        @keyframes flash {
+            0%, 100% { background-color: #ff0066; }
+            50% { background-color: #ffffff; }
         }
     </style>
 </head>
 <body>
+    <audio id="backgroundAudio" loop>
+        <source src="your_audio_file.mp3" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
+
     <div class="container">
         <h1>Sensual Escape Room</h1>
         <p>I've left clues for you... can you find me?</p>
         <button onclick="startPuzzle()">Start Your Journey</button>
 
         <div class="puzzle" id="puzzle">
-            <p>How old is Dahlia? (Hint: She's in her early 20s)</p>
+            <p>How old is Dahlia?</p>
+            <p>Hint: Think about her latest birthday... 😉</p>
             <input type="text" id="answer" placeholder="Your answer...">
             <button onclick="checkAnswer()">Submit</button>
             <p id="result"></p>
@@ -81,25 +81,38 @@
             <div id="part1" class="part">
                 <img src="images/part1.jpg" alt="Part 1 of the image">
             </div>
+
+            <p>Do I prefer techdom or findom?</p>
+            <p>Hint: I love playing mind games... 😉</p>
+
             <div id="part2" class="part">
                 <img src="images/part2.jpg" alt="Part 2 of the image">
             </div>
+
+            <p>Binary Code Puzzle:</p>
+            <p>01001001 00100000 01101100 01101111 01110110 01100101 00100000 01000100 01100001 01101000 01101100 01101001 01100001</p>
+            <p>Hint: Try using a binary decoder app to solve this... 🧐</p>
+
             <div id="part3" class="part">
                 <img src="images/part3.jpg" alt="Part 3 of the image">
             </div>
+        </div>
 
-            <div id="rewardMessage" class="show" style="display: none;">
-                <p>You are so beautiful, now for unlock more surprise click:</p>
-                <button class="final-button" onclick="redirectToThrone()">CLICK AND ENJOY</button>
-            </div>
+        <div id="rewardMessage" class="show" style="display: none;">
+            <p>You are so beautiful, now for unlocking more surprises click:</p>
+            <button onclick="redirectToThrone()">CLICK AND ENJOY</button>
         </div>
     </div>
 
     <script>
+        const audioElement = document.getElementById('backgroundAudio');
         let step = 1;
 
         function startPuzzle() {
             document.getElementById('puzzle').classList.add('show');
+            if (audioElement.paused) {
+                audioElement.play().catch(() => console.warn("Audio autoplay blocked; manual interaction required."));
+            }
         }
 
         function checkAnswer() {
@@ -108,15 +121,18 @@
             const progressBar = document.getElementById('progressBar');
 
             if (answer === '23' && step === 1) {
-                resultElement.innerHTML = '🎉 Yes... First clue solved.';
+                resultElement.innerHTML = '🎉 Correct!';
+                resultElement.classList.add('flash');
                 document.getElementById('part1').classList.add('show');
                 step++;
-            } else if (answer === 'i love dahlia' && step === 2) {
-                resultElement.innerHTML = '💋 So sweet... One more step...';
+            } else if (answer === 'techdom' && step === 2) {
+                resultElement.innerHTML = 'Nice choice...';
+                resultElement.classList.add('flash');
                 document.getElementById('part2').classList.add('show');
                 step++;
-            } else if (answer === 'passion' && step === 3) {
-                resultElement.innerHTML = '🔥 You’ve unlocked the ultimate truth... enjoy.';
+            } else if (answer === 'i love dahlia' && step === 3) {
+                resultElement.innerHTML = 'You’ve unlocked the ultimate truth... enjoy. 🔥';
+                resultElement.classList.add('flash');
                 document.getElementById('part3').classList.add('show');
                 document.getElementById('rewardMessage').style.display = 'block';
             } else {
